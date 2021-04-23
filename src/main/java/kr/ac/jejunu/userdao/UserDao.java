@@ -11,24 +11,30 @@ public class UserDao {
     }
 
     public User get(Integer id) throws SQLException {
-        StatementMaker statementMaker=new GetStatementMaker(id);
-        return jdbcContext.jdbcContextForGet(statementMaker);
+        String sql = "select * from userinfo where id = ?";
+        Object obj[]=new Object[]{id};
+        return jdbcContext.get(sql, obj);
     }
 
     public void insert(User user) throws SQLException {
-        StatementMaker statementMaker=new InsertStatementMaker(user);
-        jdbcContext.jdbcContextForinsert(user, statementMaker);
+        String sql = "insert into userinfo(name,password) value (?,?)";
+        Object obj[]=new Object[]{user.getName(),user.getPassword()};
+        jdbcContext.insert(user, sql, obj);
 
     }
 
     public void update(User user) throws SQLException {
-        StatementMaker statementMaker=new UpdateStatementMaker(user);
-        jdbcContext.jdbcContextForupdate(statementMaker);
+        String sql = "update userinfo set name=?,password=? where id=?";
+        Object obj[]=new Object[]{user.getName(),user.getPassword(),user.getId()};
+        jdbcContext.update(sql, obj);
     }
 
     public void delete(Integer id) throws SQLException {
-        StatementMaker statementMaker=new DeleteStatementMaker(id);
-        jdbcContext.jdbcContextForupdate(statementMaker);
+        String sql = "delete from userinfo where id=?";
+        Object obj[]=new Object[]{id};
+        jdbcContext.update(sql, obj);
     }
+
+
 
 }
