@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 public class UserDao {
-    private JdbcContext jdbcContext;
     private JdbcTemplate jdbcTemplate;
 
     public UserDao(JdbcTemplate jdbcTemplate) {
