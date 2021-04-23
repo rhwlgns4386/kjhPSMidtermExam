@@ -20,13 +20,13 @@ public class DaoFactory {
     private String url;
     @Bean(name="userDao")
     public UserDao getUserDao() throws ClassNotFoundException {
-        return new UserDao(getDataSource());
+        return new UserDao(getJdbcContext());
     }
 
-//    @Bean
-//    public ConnectionMaker getJejuUserDao() {
-//        return new JejuUserDao();
-//    }
+    @Bean
+    public JdbcContext getJdbcContext() throws ClassNotFoundException {
+        return new JdbcContext(getDataSource());
+    }
     @Bean
     DataSource getDataSource() throws ClassNotFoundException {
         SimpleDriverDataSource simpleDriverDataSource=new SimpleDriverDataSource();
