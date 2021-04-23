@@ -16,8 +16,10 @@ public class UserDaoTests {
         Integer id = 1;
         String name = "hulk";
         String password = "1234";
-        ConnectionMaker connectionMaker=new JejuUserDao();
-        UserDao userDao = new UserDao(connectionMaker);
+
+        DaoFactory daoFactory=new DaoFactory();
+        UserDao userDao = daoFactory.getUserDao();
+        
         User user = userDao.get(id);
         assertThat(user.getId(), is(id));
         assertThat(user.getName(), is(name));
@@ -30,8 +32,8 @@ public class UserDaoTests {
         user.setName("고지훈");
         user.setPassword("1234");
 
-        ConnectionMaker connectionMaker=new JejuUserDao();
-        UserDao userDao = new UserDao(connectionMaker);
+        DaoFactory daoFactory=new DaoFactory();
+        UserDao userDao = daoFactory.getUserDao();
         userDao.insert(user);
 
         User check = userDao.get(user.getId());
