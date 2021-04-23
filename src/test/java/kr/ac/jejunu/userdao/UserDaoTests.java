@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
 public class UserDaoTests {
@@ -49,6 +50,42 @@ public class UserDaoTests {
         assertThat(check.getId(), is(user.getId()));
         assertThat(check.getName(), is(user.getName()));
         assertThat(check.getPassword(), is(user.getPassword()));
+    }
+
+    @Test
+    public void 수정() throws SQLException, ClassNotFoundException {
+        User user=new User();
+        user.setName("고지훈");
+        user.setPassword("1234");
+
+        UserDao userDao = daoFactory;
+        userDao.insert(user);
+
+        user.setName("훈훈");
+        user.setPassword("0000");
+        userDao.update(user);
+
+        User check = userDao.get(user.getId());
+
+        assertThat(check.getId(), is(user.getId()));
+        assertThat(check.getName(), is(user.getName()));
+        assertThat(check.getPassword(), is(user.getPassword()));
+    }
+
+    @Test
+    public void 삭제() throws SQLException, ClassNotFoundException {
+        User user=new User();
+        user.setName("삭제");
+        user.setPassword("1234");
+
+        UserDao userDao = daoFactory;
+        userDao.insert(user);
+
+        userDao.delete(user.getId());
+
+        User check = userDao.get(user.getId());
+
+        assertThat(check,nullValue());
     }
 //
 //    @Test
